@@ -6,7 +6,6 @@ import LoadedGraph from "./LoadedGraph";
 import AudioPlayer from "./AudioPlayer";
 import SvgStage from "./utils/SvgStage";
 import ReactDOM from "react-dom";
-import "./app.scss";
 
 function ProcentFromAngle(angle, limit) {
     let d = angle * 180 / Math.PI - 90 + 40;
@@ -38,7 +37,7 @@ export default class AudioVisualizer extends React.Component {
     }
     componentWillMount() {
         let { par, src, play } = this.props;
-        let { state: { audio } , updatewave } = this;
+        let { state: { audio }, updatewave } = this;
 
         par.rt = (audio.currentTime || 0).toFixed(1) * 2 / 10;
         this.par = par;
@@ -94,8 +93,8 @@ export default class AudioVisualizer extends React.Component {
     }
     playAt(event) {
         let { target } = event;
-        if (!target || target.id !== "play_at") { 
-            return null; 
+        if (!target || target.id !== "play_at") {
+            return null;
         }
 
         let limit = 360 - 2 * 40,
@@ -112,22 +111,30 @@ export default class AudioVisualizer extends React.Component {
         let p = this.par;
         let { state, stage } = this;
         return (
-            <SvgStage viewBox="0 0 200 200" id="stage" stage={this.stage} >
+            <SvgStage viewBox="0 0 200 200" height="400px" id="stage" stage={this.stage} >
                 <g className="static" >
-                    <circle cx={p.cx} cy={p.cy} r={p.r2} className="dunkel" />
-                    <LevelWaveForm {...this.par} map={this.props.src + ".json"} />
+                    <circle
+                        cx={p.cx}
+                        cy={p.cy}
+                        r={p.r2}
+                        fillOpacity={0.02} />
+                    <LevelWaveForm
+                        {...this.par} 
+                        map={this.props.src + ".json"} 
+                        fillOpacity={0.8} />
+                    />
                 </g>
                 <DynamicGraphics {...state} par={this.par} toggle={state.audio.toggle} />
-                <AudioLevel 
-                    cx={p.cx} cy={p.cy} r1={p.r1} r2={p.r2} 
-                    gain={this.gainer.gain} 
-                    convert={stage.convert} 
+                <AudioLevel
+                    cx={p.cx} cy={p.cy} r1={p.r1} r2={p.r2}
+                    gain={this.gainer.gain}
+                    convert={stage.convert}
                 />
-                <LoadedGraph 
-                    className={"onplace"} 
-                    id='play_at' 
-                    cx={p.cx} cy={p.cy} r1={p.r1} r2={p.r2} pro={1} 
-                    inside={[-40, 40]} 
+                <LoadedGraph
+                    fillOpacity={0}
+                    id='play_at'
+                    cx={p.cx} cy={p.cy} r1={p.r1} r2={p.r2} pro={1}
+                    inside={[-40, 40]}
                 />
             </SvgStage>
         );

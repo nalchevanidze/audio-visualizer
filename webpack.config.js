@@ -8,17 +8,10 @@ module.exports = {
         historyApiFallback: true
     },
     entry: {
-        app: [
-            "babel-polyfill",
-            "./preview.js"
-        ],
-        index:[
-            "babel-polyfill",
-            "./src"
-        ]
+        app: "./preview.js"
     },
     output: {
-        filename: "public/[name].js"
+        filename: "[name].js"
     },
     devtool: "source-map",
     resolveLoader: {
@@ -27,7 +20,6 @@ module.exports = {
     module: {
         rules: Loaders
     },
-
     resolve: {
         extensions: [".js", ".svg", ".json", ".jsx"]
     },

@@ -9,9 +9,10 @@ class SvgStage extends Component {
         }
     }
     render () {
-        let { children , className , id ,viewBox } = this.props;
+        let { children , ...props } = this.props;
+        delete props.stage;
         return (
-            <svg className={className} id={id} viewBox={viewBox} >
+            <svg {...props} >
                 {children}
             </svg>
         );

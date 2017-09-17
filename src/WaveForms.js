@@ -17,20 +17,24 @@ const WaveForms = ({ cx, cy, r1, r2, r3, fr, spec }) => {
 
     return (
         <g className="waves prime">
-            <g fillRule="evenodd">
+            <g fillRule="evenodd" fill="#7b838a">
                 <path
+                    
                     d={srstat(fr, ir + 20, -k * (r3 - r2) * 3) + "  " + arc80}
-                    fillOpacity="0.42"
+                    fillOpacity={0.2}
                 />
                 <path
                     d={srstat(spec, r2, k * (r1 - r2)) + "  " + arc80}
+                    fillOpacity={0.6}
                 />
             </g>
             <circle
                 cx={cx}
                 cy={cy}
                 r={r3}
-                className="stepper"
+                fill="none"
+                stroke="white"
+                strokeDasharray="0.5 4"
                 style={{ strokeWidth: dp * 2 }}
             />
         </g>

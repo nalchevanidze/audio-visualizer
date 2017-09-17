@@ -1,6 +1,4 @@
 module.exports = {
-
-
     "indent": [
         "error", 
         4,

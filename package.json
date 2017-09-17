@@ -1,13 +1,13 @@
 {
-  "name": "AudioVisualizer",
-  "version": "1.0.0",
-  "description": "Website Template for My CV",
+  "name": "nalche-audio-visualizer",
+  "version": "0.0.2",
+  "description": "react audio visualizer",
   "main": "index.js",
-  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --hot --colors",
-    "minify": "webpack -p"
+    "minify": "webpack --config webpack-p.config.js",
+    "gulp": "gulp"
   },
   "author": "David Nalchevanidze",
   "license": "ISC",
@@ -24,17 +24,19 @@
     "eslint-loader": "^1.9.0",
     "eslint-plugin-react": "^7.3.0",
     "extract-text-webpack-plugin": "2.1.2",
+    "gulp-babel": "^7.0.0",
+    "gulp-sass": "^3.1.0",
     "node-libs-browser": "^1.0.0",
     "node-sass": "^3.8.0",
     "sass-loader": "^4.0.0",
     "strip-loader": "^0.1.2",
     "style-loader": "^0.13.1",
-    "webpack": "^3.5.6",
+    "webpack": "^3.6.0",
     "webpack-dev-server": "^2.7.1"
   },
   "dependencies": {
     "axios": "^0.15.3",
-    "babel-polyfill": "^6.26.0",
+    "gulp": "^3.9.1",
     "react": "^15.3.0",
     "react-dom": "^15.3.0"
   }

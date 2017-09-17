@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import AudioVisualizer from "./src";
+import AudioVisualizer from "./index";
 ReactDOM.render(
     <AudioVisualizer
         src={"/resource/david-alpha-reborn-work-in-progress"}
@@ -16,4 +16,3 @@ ReactDOM.render(
     />,
     document.getElementById("page")
 );
-
