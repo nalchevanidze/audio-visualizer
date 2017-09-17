@@ -8,7 +8,7 @@ export default class WaveForm extends React.Component {
         this.state = { form: [] };
     }
     WaveFormRequest() {
-        let { url } = this.props;
+        let { url , height = 50, width = 500 , resolution = 250 } = this.props;
         this.state.url = url;
         if (cache[url]) {
             this.setState({ form: cache[url] });
@@ -17,7 +17,7 @@ export default class WaveForm extends React.Component {
                 .then(({ data }) => {
                     let form = FlatSoundForm(
                         data,
-                        { width: 500, height: 50, resolution: 200 }
+                        {width,height,resolution}
                     );
                     cache[url] = form;
                     this.setState({ form });
@@ -37,7 +37,7 @@ export default class WaveForm extends React.Component {
                 <path d={this.state.form} fill={fill} />
                 <path d='M0 0 L500 0'
                     strokeDasharray={steps}
-                    strokeWidth= { height / 2 + "px"}
+                    strokeWidth= {height}
                     stroke="white"
                     fill="none"
                 />

@@ -45,7 +45,14 @@ var WaveForm = function (_React$Component) {
         value: function WaveFormRequest() {
             var _this2 = this;
 
-            var url = this.props.url;
+            var _props = this.props,
+                url = _props.url,
+                _props$height = _props.height,
+                height = _props$height === undefined ? 50 : _props$height,
+                _props$width = _props.width,
+                width = _props$width === undefined ? 500 : _props$width,
+                _props$resolution = _props.resolution,
+                resolution = _props$resolution === undefined ? 250 : _props$resolution;
 
             this.state.url = url;
             if (cache[url]) {
@@ -54,7 +61,7 @@ var WaveForm = function (_React$Component) {
                 _axios2.default.get(url + ".json").then(function (_ref) {
                     var data = _ref.data;
 
-                    var form = (0, _FlatSoundForm2.default)(data, { width: 500, height: 50, resolution: 200 });
+                    var form = (0, _FlatSoundForm2.default)(data, { width: width, height: height, resolution: resolution });
                     cache[url] = form;
                     _this2.setState({ form: form });
                 });
@@ -73,15 +80,15 @@ var WaveForm = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            var _props = this.props,
-                _props$fill = _props.fill,
-                fill = _props$fill === undefined ? "#777" : _props$fill,
-                _props$steps = _props.steps,
-                steps = _props$steps === undefined ? "1 2" : _props$steps,
-                _props$height = _props.height,
-                height = _props$height === undefined ? 50 : _props$height,
-                _props$width = _props.width,
-                width = _props$width === undefined ? 500 : _props$width;
+            var _props2 = this.props,
+                _props2$fill = _props2.fill,
+                fill = _props2$fill === undefined ? "#777" : _props2$fill,
+                _props2$steps = _props2.steps,
+                steps = _props2$steps === undefined ? "1 2" : _props2$steps,
+                _props2$height = _props2.height,
+                height = _props2$height === undefined ? 50 : _props2$height,
+                _props2$width = _props2.width,
+                width = _props2$width === undefined ? 500 : _props2$width;
 
             return _react2.default.createElement(
                 "svg",
@@ -89,7 +96,7 @@ var WaveForm = function (_React$Component) {
                 _react2.default.createElement("path", { d: this.state.form, fill: fill }),
                 _react2.default.createElement("path", { d: "M0 0 L500 0",
                     strokeDasharray: steps,
-                    strokeWidth: height / 2 + "px",
+                    strokeWidth: height,
                     stroke: "white",
                     fill: "none"
                 })

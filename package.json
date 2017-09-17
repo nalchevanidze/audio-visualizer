@@ -1,6 +1,6 @@
 {
   "name": "nalche-audio-visualizer",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "react audio visualizer",
   "main": "index.js",
   "scripts": {
