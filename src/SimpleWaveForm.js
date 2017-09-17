@@ -7,42 +7,40 @@ export default class WaveForm extends React.Component {
         super(props);
         this.state = { form: [] };
     }
-
     WaveFormRequest() {
         let { url } = this.props;
-        this.state.url = url ;
-        if(cache[url]) { 
-
-            this.setState( { form: cache[url] } );
-
-        } else{
-            axios.get(`http://nalchevanidze.com/resource/audio/${url}.json`)
-                .then(({data}) => {
-
-                    let form = FlatSoundForm( 
-                        data , 
-                        {width: 500, height: 50 , resolution: 200 } 
+        this.state.url = url;
+        if (cache[url]) {
+            this.setState({ form: cache[url] });
+        } else {
+            axios.get(`${url}.json`)
+                .then(({ data }) => {
+                    let form = FlatSoundForm(
+                        data,
+                        { width: 500, height: 50, resolution: 200 }
                     );
-
-                    cache[url] = form ;
-
-                    this.setState({form});
-                    
+                    cache[url] = form;
+                    this.setState({ form });
                 });
-
-        } 
+        }
     }
     componentWillMount() {
         this.WaveFormRequest();
     }
-    componentWillReceiveProps(){
+    componentWillReceiveProps() {
         this.WaveFormRequest();
     }
     render() {
+        const { fill = "#777", steps = "1 2", height = 50, width = 500 } = this.props;
         return (
-            <svg viewBox="0 -25 500 50" >
-                <path d={this.state.form} className="prime" />
-                <path d='M0 0 L500 0' className="stepper" />
+            <svg viewBox={[0, -height / 2, width, height].join(" ")} >
+                <path d={this.state.form} fill={fill} />
+                <path d='M0 0 L500 0'
+                    strokeDasharray={steps}
+                    strokeWidth= { height / 2 + "px"}
+                    stroke="white"
+                    fill="none"
+                />
             </svg>
         );
     }

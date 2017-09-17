@@ -49,17 +49,13 @@ var WaveForm = function (_React$Component) {
 
             this.state.url = url;
             if (cache[url]) {
-
                 this.setState({ form: cache[url] });
             } else {
-                _axios2.default.get("http://nalchevanidze.com/resource/audio/" + url + ".json").then(function (_ref) {
+                _axios2.default.get(url + ".json").then(function (_ref) {
                     var data = _ref.data;
 
-
                     var form = (0, _FlatSoundForm2.default)(data, { width: 500, height: 50, resolution: 200 });
-
                     cache[url] = form;
-
                     _this2.setState({ form: form });
                 });
             }
@@ -77,11 +73,26 @@ var WaveForm = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
+            var _props = this.props,
+                _props$fill = _props.fill,
+                fill = _props$fill === undefined ? "#777" : _props$fill,
+                _props$steps = _props.steps,
+                steps = _props$steps === undefined ? "1 2" : _props$steps,
+                _props$height = _props.height,
+                height = _props$height === undefined ? 50 : _props$height,
+                _props$width = _props.width,
+                width = _props$width === undefined ? 500 : _props$width;
+
             return _react2.default.createElement(
                 "svg",
-                { viewBox: "0 -25 500 50" },
-                _react2.default.createElement("path", { d: this.state.form, className: "prime" }),
-                _react2.default.createElement("path", { d: "M0 0 L500 0", className: "stepper" })
+                { viewBox: [0, -height / 2, width, height].join(" ") },
+                _react2.default.createElement("path", { d: this.state.form, fill: fill }),
+                _react2.default.createElement("path", { d: "M0 0 L500 0",
+                    strokeDasharray: steps,
+                    strokeWidth: height / 2 + "px",
+                    stroke: "white",
+                    fill: "none"
+                })
             );
         }
     }]);
