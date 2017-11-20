@@ -1,4 +1,4 @@
-import { ComponentClass } from "react";
+import * as React from "react";
 
 export interface SoundformProps {
     url: string;
@@ -8,7 +8,7 @@ export interface SoundformProps {
     fill?: string;
 }
 
-export default class AudioVisualizer
-    extends React.Component<AudioVisualizerProps, {}> {
+export default class Soundform
+    extends React.Component<SoundformProps, {}> {
 
 }
