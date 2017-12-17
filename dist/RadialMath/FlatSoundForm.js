@@ -26,6 +26,7 @@ function FlatSoundForm(WaveArray, props) {
         if (isNaN(resolution)) {
             throw new Error("FlatSoundForm.js : False Resolution");
         }
+
         WaveArray = (0, _ResoluteArray2.default)(WaveArray, resolution);
     }
 
@@ -33,5 +34,14 @@ function FlatSoundForm(WaveArray, props) {
         return "";
     }
 
-    return "M" + [(0, _LinearStatistic2.default)(WaveArray, width, height), (0, _LinearStatistic2.default)(WaveArray, width, -height).reverse()].join(" ") + "z";
+    var stepSize = props.width / resolution;
+
+    return WaveArray.map(function (e, index) {
+        return " M" + index * stepSize + " " + e * height + " " + index * stepSize + " -" + e * height + " ";
+    }).join(" ");
+
+    // return "M" + [
+    //     LinearStatistic( WaveArray , width , height ),
+    //     LinearStatistic( WaveArray , width , -height ).reverse()
+    // ].join(" ")+ "z";
 }

@@ -2,10 +2,11 @@ import * as React from "react";
 
 export interface SoundformProps {
     url: string;
-    steps?: number[];
+    color?:string, 
+    stepSize?: number;
+    strokeWidth:number;
     height?: number;
     width?: number;
-    fill?: string;
 }
 
 export default class Soundform

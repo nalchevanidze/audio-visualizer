@@ -81,7 +81,7 @@ var AudioLevel = function (_React$Component) {
                     newGain = newGain > 0.98 ? 0.98 : newGain;
                     newGain = newGain < 0.05 ? 0.05 : newGain;
                     this.setState({ gain: newGain });
-                    gain.value = Math.pow(newGain, 2);
+                    gain.setValueAtTime(Math.pow(newGain, 2), 0);
                 }
             }
         }

@@ -105,7 +105,7 @@ var AudioVisualizer = function (_React$Component) {
                 if (play) {
                     audio.playNew(src);
                 }
-                this.gainer.gain.value = 0.1;
+                this.gainer.gain.setValueAtTime(0.1, 0);
                 updatewave();
             }
         }

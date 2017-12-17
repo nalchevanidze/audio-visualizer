@@ -39,7 +39,7 @@ export default class AudioLevel extends React.Component {
                 newGain = newGain > 0.98 ? 0.98 : newGain;
                 newGain = newGain < 0.05 ? 0.05 : newGain;
                 this.setState({ gain: newGain });
-                gain.value = newGain ** 2;
+                gain.setValueAtTime(newGain ** 2,0);
             }
         }
     }

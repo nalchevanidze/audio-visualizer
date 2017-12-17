@@ -10,6 +10,7 @@ export default function FlatSoundForm ( WaveArray , props ) {
         if(isNaN(resolution)) {
             throw new Error("FlatSoundForm.js : False Resolution");
         }
+        
         WaveArray = ResoluteArray( WaveArray , resolution ); 
     }
 
@@ -17,9 +18,15 @@ export default function FlatSoundForm ( WaveArray , props ) {
         return "";
     }
 
-    return "M" + [
-        LinearStatistic( WaveArray , width , height ),
-        LinearStatistic( WaveArray , width , -height ).reverse()
-    ].join(" ")+ "z";
+    let stepSize = props.width/resolution;
+
+    return WaveArray.map(
+        (e,index)=> ` M${index*stepSize} ${e*height} ${index*stepSize} -${e*height} `
+    ).join(" ");
+
+    // return "M" + [
+    //     LinearStatistic( WaveArray , width , height ),
+    //     LinearStatistic( WaveArray , width , -height ).reverse()
+    // ].join(" ")+ "z";
     
 }
