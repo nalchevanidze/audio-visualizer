@@ -35,7 +35,8 @@ var WaveForm = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (WaveForm.__proto__ || Object.getPrototypeOf(WaveForm)).call(this, props));
 
         _this.state = {
-            form: [] };
+            form: []
+        };
         return _this;
     }
 
@@ -56,12 +57,14 @@ var WaveForm = function (_React$Component) {
                 var data = _ref.data;
 
 
-                _this2.setState({ form: (0, _CircleSoundForm2.default)(data, {
+                _this2.setState({
+                    form: (0, _CircleSoundForm2.default)(data, {
                         cx: cx,
                         cy: cy,
                         c: (r2 + r1) / 2,
                         w: r2 - r1
-                    }) });
+                    })
+                });
             });
         }
     }, {
@@ -79,7 +82,10 @@ var WaveForm = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            return _react2.default.createElement("path", { d: this.state.form, className: "prime" });
+            return _react2.default.createElement("path", {
+                d: this.state.form,
+                className: "prime"
+            });
         }
     }]);
 
