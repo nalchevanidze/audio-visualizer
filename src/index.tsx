@@ -3,7 +3,7 @@ import LevelWaveForm from "./LevelWaveForm";
 import DynamicGraphics from "./DynamicGraphics";
 import AudioLevel from "./AudioLevel";
 import LoadedGraph from "./LoadedGraph";
-import AudioPlayer from "./AudioPlayer";
+import {gainer , audio , waveForm , AudioObject , WaveForm } from "./AudioPlayer";
 import SvgStage from "./utils/SvgStage";
 import { findDOMNode } from "react-dom";
 
@@ -29,17 +29,23 @@ interface AudioVisualizerProps {
     play: boolean,
 }
 
-export default class AudioVisualizer extends React.Component<AudioVisualizerProps> {
+interface State {
+    
+}
+
+export default class AudioVisualizer extends React.Component<State , AudioVisualizerProps> {
     hide: boolean;
     stage : {};
+    audio: AudioObject;
+    waveForm : WaveForm;
     
     constructor(props) {
         super(props);
         this.hide = false;
         this.stage = {};
-        const { gainer, waveForm, audio } = AudioPlayer;
         this.gainer = gainer;
         this.waveForm = waveForm;
+        this.audio = audio;
         this.state = {
             mode: "paused",
             data: null,
@@ -47,21 +53,18 @@ export default class AudioVisualizer extends React.Component<AudioVisualizerProp
             fr: waveForm.fr,
             spec: waveForm.spec,
             pro: 0,
-            time: 0,
-            audio: audio
+            time: 0
         };
         this.playAt = this.playAt.bind(this);
         this.updatewave = this.updatewave.bind(this);
     }
     componentWillMount() {
         let { par, src, play } = this.props;
-        let { state: { audio }, updatewave } = this;
+        let { audio , updatewave } = this;
         par.rt = (audio.currentTime || 0).toFixed(1) * 2 / 10;
         this.par = par;
-
-
         if (src) {
-            audio.src = src + ".mp3";
+            audio.setSrc(src)
             if (play) {
                 audio.playNew(src);
             }
@@ -74,29 +77,21 @@ export default class AudioVisualizer extends React.Component<AudioVisualizerProp
     }
     componentWillReceiveProps(next) {
         if (next.src) {
-            this.state.audio.playNew(next.src);
+            this.audio.playNew(next.src);
         } else if (next.play) {
-            this.state.audio.play();
+            this.audio.play();
         } else {
-            this.state.audio.pause();
+            this.audio.pause();
         }
 
     }
     updatewave() {
         if (!this.hide) {
             requestAnimationFrame(this.updatewave);
-            if (!this.state.audio.paused) {
-                let audio = this.state.audio;
+            if (!this.audio.isPoaused()) {
                 this.state.mode = "play";
                 this.waveForm.render();
-                let pro = audio.currentTime / audio.duration;
-                this.setState(
-                    {
-                        pro: (isNaN(pro) ? 0 : pro),
-                        time: audio.currentTime
-                    }
-                );
-
+                this.setState(this.audio.getState());
             } else if (this.state.mode === "play") {
                 this.setState({ mode: "paused" });
             }
@@ -105,7 +100,7 @@ export default class AudioVisualizer extends React.Component<AudioVisualizerProp
     }
     componentWillUnmount() {
         this.hide = true;
-        this.state.audio.pause();
+        this.audio.pause();
         findDOMNode(this).removeEventListener("mousedown", this.playAt, false);
     }
     playAt(event) {
@@ -119,14 +114,14 @@ export default class AudioVisualizer extends React.Component<AudioVisualizerProp
             { cx, cy } = this.par;
 
         let angle = Math.atan2(x - cx, y - cy),
-            pro = ProcentFromAngle(angle, limit),
-            time = this.state.audio.duration * pro;
-        this.state.audio.currentTime = time;
-        this.setState({ time, pro });
+            pro = ProcentFromAngle(angle, limit);
+    
+        const newState = this.audio.setProcent(pro);
+        this.setState(newState);
     }
     render() {
         let p = this.par;
-        let { state, stage } = this;
+        let { state, stage , audio } = this;
         return (
             <SvgStage viewBox="0 0 200 200" height="400px" id="stage" stage={this.stage} >
                 <g className="static" >
@@ -141,7 +136,7 @@ export default class AudioVisualizer extends React.Component<AudioVisualizerProp
                         fillOpacity={0.8} />
                     />
                 </g>
-                <DynamicGraphics {...state} par={this.par} toggle={state.audio.toggle} />
+                <DynamicGraphics {...state} par={this.par} toggle={audio.toggle} />
                 <AudioLevel
                     cx={p.cx} cy={p.cy} r1={p.r1} r2={p.r2}
                     gain={this.gainer.gain}

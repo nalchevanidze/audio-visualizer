@@ -3,43 +3,77 @@ if(!AudioContext) {
     your Browser. Try a recent Chrome or Firefox`);
 }
 
-const context = new AudioContext(),
-    analyser = context.createAnalyser() ,
-    gainer = context.createGain(),
-    audio = document.createElement("AUDIO");
-let audioSrc = context.createMediaElementSource(audio);
-
-audioSrc.connect(analyser);
-audioSrc.connect(gainer);
-gainer.connect(context.destination);
+const audioInstance : HTMLMediaElement= document.createElement("AUDIO") as HTMLMediaElement;
 
 
-audio.playNew = function SetSource(src){
-    if(audio.src !== src + ".mp3" ){
-        audio.src = src + ".mp3" ;
-      
+
+
+export class AudioObject {
+    private context:AudioContext;
+    public gainer;
+    public analyser;
+    constructor(){
+        this.context = new AudioContext();
+        this.analyser = this.context.createAnalyser();
+        this.gainer = this.context.createGain(); 
+        const { context , analyser , gainer} = this;
+        const audioSrc = context.createMediaElementSource(audioInstance);
+        audioSrc.connect(analyser);
+        audioSrc.connect(gainer);
+        gainer.connect(this.context.destination);
     }
-    audio.onloadeddata = ()=> audio.play();
-    
-};
-audio.toggle = function toggleAudio (){ 
-    audio.paused? audio.play() : audio.pause();
-};
 
+    toggle = () => { 
+        audioInstance.paused? audioInstance.play() : audioInstance.pause();
+    };
 
-// analiser Functions //
-let waveForm = {
-    fr: new Uint8Array(800),
-    spec: new Uint8Array(600)
-};
+    playNew = (src): void => {
+        if(audioInstance.src !== src + ".mp3" ){
+            audioInstance.src = src + ".mp3" ;
+          
+        }
+        audioInstance.onloadeddata = ()=> audioInstance.play();
+    };
 
-waveForm.render = function UpdateWaveForm (){
-    analyser.getByteFrequencyData(waveForm.spec);
-    analyser.getByteTimeDomainData(waveForm.fr);
-};
-    
+    setSrc(src){
+        audioInstance.src = src + ".mp3";
+    }
+    play = ()=> audioInstance.play();
+    pause = ()=> audioInstance.pause();
 
-const AudioPlayer = { gainer, audio, waveForm };
+    getCurrentTime = ():number => audioInstance.currentTime;
 
+    getProcent = ():number => {
+        const pro = this.getCurrentTime() / audioInstance.duration;
+        return (isNaN(pro) ? 0 : pro)
+    }
 
-export default AudioPlayer ;
+    setProcent = (pro: number )=>{
+        const time = audioInstance.duration * pro;
+        audioInstance.currentTime = time;
+        return { pro , time };
+    }
+
+    getState = ()=> ({ time : this.getCurrentTime() , pro: this.getProcent() });
+
+    isPoaused = () : boolean => audioInstance.paused;
+} 
+
+export class WaveForm {
+    public fr: Uint8Array;
+    public spec : Uint8Array;
+    private analyser;
+    constructor(analyser){
+        this.analyser = analyser;
+        this.fr = new Uint8Array(800);
+        this.spec = new Uint8Array(600);
+    }
+    render = () : void => {
+        this.analyser.getByteFrequencyData(this.spec);
+        this.analyser.getByteTimeDomainData(this.fr);
+    };
+}
+
+export const audio = new AudioObject();
+export const waveForm = new WaveForm(audio.analyser);
+export const gainer = audio.gainer;
