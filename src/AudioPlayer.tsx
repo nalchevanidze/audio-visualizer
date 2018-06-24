@@ -1,4 +1,3 @@
-window.AudioContext = window.AudioContext || window.webkitAudioContext ;
 if(!AudioContext) {
     throw new Error(`This site cannot be run in 
     your Browser. Try a recent Chrome or Firefox`);
