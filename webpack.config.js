@@ -1,5 +1,3 @@
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const Loaders = require("./config/webpack/loaders");
 module.exports = {
     devServer: {
         contentBase: "./public",
@@ -8,22 +6,26 @@ module.exports = {
         historyApiFallback: true
     },
     entry: {
-        app: "./preview.js"
+        app: "./preview.tsx"
     },
     output: {
-        filename: "[name].js"
+        filename: "public/[name].js"
     },
     devtool: "source-map",
     resolveLoader: {
         moduleExtensions: ["-loader"]
     },
     module: {
-        rules: Loaders
+        rules: [{
+            test: /\.tsx?$/,
+            use: "ts-loader",
+            exclude: /node_modules/
+        }]
     },
+
     resolve: {
-        extensions: [".js", ".svg", ".json", ".jsx"]
+        extensions: [".js", "jsx", ".ts", ".tsx"]
     },
-    plugins: [
-        new ExtractTextPlugin("./public/app.css")
-    ]
+
+    mode:"development"
 };

@@ -1,11 +1,11 @@
-import React from "react";
+import * as React from "react";
 import LevelWaveForm from "./LevelWaveForm";
 import DynamicGraphics from "./DynamicGraphics";
 import AudioLevel from "./AudioLevel";
 import LoadedGraph from "./LoadedGraph";
 import AudioPlayer from "./AudioPlayer";
 import SvgStage from "./utils/SvgStage";
-import ReactDOM from "react-dom";
+import { findDOMNode } from "react-dom";
 
 function ProcentFromAngle(angle, limit) {
     let d = angle * 180 / Math.PI - 90 + 40;
@@ -53,7 +53,7 @@ export default class AudioVisualizer extends React.Component {
         }
     }
     componentDidMount() {
-        ReactDOM.findDOMNode(this).addEventListener("mousedown", this.playAt, false);
+        findDOMNode(this).addEventListener("mousedown", this.playAt, false);
     }
     componentWillReceiveProps(next) {
         if (next.src) {
@@ -89,7 +89,7 @@ export default class AudioVisualizer extends React.Component {
     componentWillUnmount() {
         this.hide = true;
         this.state.audio.pause();
-        ReactDOM.findDOMNode(this).removeEventListener("mousedown", this.playAt, false);
+        findDOMNode(this).removeEventListener("mousedown", this.playAt, false);
     }
     playAt(event) {
         let { target } = event;

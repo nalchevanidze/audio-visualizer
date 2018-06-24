@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import FlatSoundForm from "./RadialMath/FlatSoundForm";
 import axios from "axios";
 const cache = {};

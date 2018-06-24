@@ -1,6 +1,6 @@
-import React from "react";
+import * as React from "react";
 import LoadedGraph from "./LoadedGraph";
-import ReactDOM from "react-dom";
+import { findDOMNode } from "react-dom";
 
 export default class AudioLevel extends React.Component {
     constructor(props) {
@@ -12,14 +12,14 @@ export default class AudioLevel extends React.Component {
         this.mouseDown = this.listenLevel.bind(this, true);
     }
     componentDidMount() {
-        let target = ReactDOM.findDOMNode(this);
+        let target = findDOMNode(this);
         target.addEventListener("mousemove", this.levelMove, false);
         target.addEventListener("mouseup", this.mouseUp, false);
         target.addEventListener("mousedown", this.mouseDown, false);
     }
     componentWillUnmount() {
         this.hide = true;
-        let target = ReactDOM.findDOMNode(this);
+        let target = findDOMNode(this);
         target.removeEventListener("mousemove", this.levelMove, false);
         target.removeEventListener("mouseup", this.mouseUp, false);
         target.removeEventListener("mousedown", this.mouseDown, false);

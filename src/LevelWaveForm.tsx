@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import CircleSoundForm from "./RadialMath/CircleSoundForm";
 import axios from "axios";
 

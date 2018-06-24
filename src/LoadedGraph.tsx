@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import FilledArc from "./RadialMath/FilledArc";
 import ArcBorders from "./RadialMath/ArcBorders";
 

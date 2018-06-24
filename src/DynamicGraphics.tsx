@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import LoadedGraph from "./LoadedGraph";
 import LineTime from "./LineTime";
 import WaveForms from "./WaveForms";

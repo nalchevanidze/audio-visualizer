@@ -1,2 +1,2 @@
-import index from "./dist/SimpleWaveForm";
+import index from "./src/SimpleWaveForm";
 export default index;

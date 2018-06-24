@@ -1,13 +1,16 @@
-import React ,{ Component } from "react";
-import ReactDOM from "react-dom";
+import * as React  from "react";
+import { findDOMNode } from "react-dom";
 import SvgCoordinates from "./SvgCoordinates";
-class SvgStage extends Component {
+
+class SvgStage extends React.Component {
+
     componentDidMount() {
-        let $this = ReactDOM.findDOMNode(this);
+        let $this = findDOMNode(this);
         if(this.props.stage){
             this.props.stage.convert = event=> SvgCoordinates( $this , event );
         }
     }
+
     render () {
         let { children , ...props } = this.props;
         delete props.stage;
@@ -17,5 +20,7 @@ class SvgStage extends Component {
             </svg>
         );
     }
+    
 }
+
 export default SvgStage ;

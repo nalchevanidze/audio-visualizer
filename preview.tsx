@@ -1,9 +1,9 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import AudioVisualizer from "./index";
+import * as React from "react";
+import { render } from "react-dom";
+import AudioVisualizer from "./src";
 import Soundform from "./soundform";
 
-ReactDOM.render(
+render(
     <div>
         <AudioVisualizer
             src={"/resource/david-alpha-reborn-work-in-progress"}
