@@ -14,7 +14,25 @@ function ProcentFromAngle(angle, limit) {
     return (procent > 1 ? 1 : procent);
 }
 
-export default class AudioVisualizer extends React.Component {
+interface Parameters {
+    cx: number,
+    cy: number,
+    r1: number,
+    r2: number,
+    r3: number,
+    r4: number
+}
+
+interface AudioVisualizerProps {
+    par: Parameters,
+    src: string,
+    play: boolean,
+}
+
+export default class AudioVisualizer extends React.Component<AudioVisualizerProps> {
+    hide: boolean;
+    stage : {};
+    
     constructor(props) {
         super(props);
         this.hide = false;
@@ -38,7 +56,6 @@ export default class AudioVisualizer extends React.Component {
     componentWillMount() {
         let { par, src, play } = this.props;
         let { state: { audio }, updatewave } = this;
-
         par.rt = (audio.currentTime || 0).toFixed(1) * 2 / 10;
         this.par = par;
 
