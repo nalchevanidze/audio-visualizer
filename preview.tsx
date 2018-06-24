@@ -6,7 +6,7 @@ import Soundform from "./soundform";
 render(
     <div>
         <AudioVisualizer
-            src={"/resource/david-alpha-reborn-work-in-progress"}
+            src={"/david-alpha-reborn-work-in-progress"}
             par={{
                 cx: 100,
                 cy: 100,
@@ -18,7 +18,7 @@ render(
             play={true}
         />
         <Soundform 
-            url={"/resource/david-alpha-reborn-work-in-progress"} 
+            url={"/david-alpha-reborn-work-in-progress"} 
             stepSize={3}
             color={"red"}
             strokeWidth={0.2}
